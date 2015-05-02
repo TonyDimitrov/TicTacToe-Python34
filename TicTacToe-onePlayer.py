@@ -1,4 +1,8 @@
 # Tic Tac Toe
+# Tic Tac Toe console text user interface game for a human playing against the computer. 
+# The random class generates random  numbers which are used for the moves of the computer in the game. 
+# Class time is used to set time elapse to make the game more real.
+# Class os is uset to clear the console. 
 import random
 import time
 import os
@@ -6,8 +10,6 @@ os.system("mode con: line = 60")
 
 def ClearCmd():
 	os.system("cls" if os.name=="nt" else "clear")
-	
-ClearCmd()
 
 def PlayFirstOrSecond():
 	print("WELCOM TO TIC TAC TOE!")
@@ -36,16 +38,6 @@ def IntroToGame():
 	print("Enjoy!");
 	print();
 	
-xO = [ 'X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X', 'O' ]
-numsTo9 = ['1', '2','3','4','5','6','7','8','9']
-length = 7
-temp = 0
-frameEl = 0
-frameStr = ""
-triger = 0
-counter = 0
-f = 0
-
 def FrameAndContent(numsTo9):
 	for i in range(0, length + 2,3):  #//////////////Start code for: Printing frame and content of frame
 		adds = 0
@@ -119,36 +111,64 @@ def CheckForWinner(numsTo9):
 	elif(numsTo9[2] == numsTo9[4] and numsTo9[4] == numsTo9[6]):
 		winner = True;
 	return winner 
+
+def ContinueOrQuit():
+	quit = True 
+	time.sleep(2)
+	print()
+	while True:
+		yesOrNo = input("Do you want to continue yes/no ").lower()
+		if(yesOrNo == "no"):
+			quit = False
+			break;
+		elif(yesOrNo == "yes"):
+			break;
+	return quit
+				
 		
 # we can ask if you want to play first or second regarding enter 1 0r 2 ;
-oneOrTwo = 1
-firstOrSec = PlayFirstOrSecond()
-ClearCmd()
-IntroToGame()
-FrameAndContent(numsTo9)
-for i in range(0,9):
-	print()
-	#playerInput = input("** "+xO[counter]+" ** Enter position --> ") # -------> INPUT 
-	if(firstOrSec == 1):
-		firstOrSec = firstOrSec + 1
-		oneOrTwo = oneOrTwo -1
-	if((i+1) % firstOrSec == oneOrTwo):
-		inputForGame = ComputerInput()
-	else:
-		inputForGame = ValidPlayerInput()  # input from player
-		
-	ManipulateNumsTo9Arr(inputForGame, counter)# no printing, input and arrNumsto9 manipulation
+quit = True
+while(quit == True):
+	xO = [ 'X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X', 'O' ]
+	length = 7
+	temp = 0
+	frameEl = 0
+	frameStr = ""
+	triger = 0
+	counter = 0
+	f = 0
+	numsTo9 = ['1', '2','3','4','5','6','7','8','9']
+	oneOrTwo = 1
 	ClearCmd()
+	firstOrSec = PlayFirstOrSecond()
+	ClearCmd()
+	print("mama, mia...........")
 	IntroToGame()
-	numsTo9 = ManipulateNumsTo9Arr(inputForGame, counter)
-	counter = counter + 1
 	FrameAndContent(numsTo9)
-	endOfGame = CheckForWinner(numsTo9)
-	if(endOfGame == True):
+	for i in range(0,9):
 		print()
-		print("WE HAVE A WINNER!!!")
-		print("The player with \""+xO[counter-1]+ "\" wins the game.")
-		break
-if(endOfGame == False):
-	print()
-	print("No Winner try again.")
+		#playerInput = input("** "+xO[counter]+" ** Enter position --> ") # -------> INPUT 
+		if(firstOrSec == 1):
+			firstOrSec = firstOrSec + 1
+			oneOrTwo = oneOrTwo -1
+		if((i+1) % firstOrSec == oneOrTwo):
+			inputForGame = ComputerInput()
+		else:
+			inputForGame = ValidPlayerInput()  # input from player
+			
+		ManipulateNumsTo9Arr(inputForGame, counter)# no printing, input and arrNumsto9 manipulation
+		ClearCmd()
+		IntroToGame()
+		numsTo9 = ManipulateNumsTo9Arr(inputForGame, counter)
+		counter = counter + 1
+		FrameAndContent(numsTo9)
+		endOfGame = CheckForWinner(numsTo9)
+		if(endOfGame == True):
+			print()
+			print("WE HAVE A WINNER!!!")
+			print("The player with \""+xO[counter-1]+ "\" wins the game.")
+			break
+	if(endOfGame == False):
+		print()
+		print("No Winner try again.")
+	quit = ContinueOrQuit()
